@@ -5,10 +5,10 @@
   * Redistribution and use in source and binary forms, with or without
   * modification, are permitted provided that the following conditions
   * are met:
-  * 1. Redistributions of source code must retain the above copyright 
+  * 1. Redistributions of source code must retain the above copyright
   * notice, this list of conditions and the following disclaimer.
   * 2. Redistributions in binary form must reproduce the above copyright
-  * notice, this list of conditions and the following disclaimer in the 
+  * notice, this list of conditions and the following disclaimer in the
   * documentation and/or other materials provided with the distribution.
   * 3. Redistributions in any form must be accompanied by information on
   * how to obtain complete source code for the X-Diff software and any
@@ -40,29 +40,30 @@ package net.lizhao;
 import java.util.Hashtable;
 
 /**
-  * <code>XLut</code> is the hash lookup table for node distance.
-  */
-class XLut
-{
-	private Hashtable	_xTable;
+ * <code>XLut</code> is the hash lookup table for node distance.
+ */
+class XLut {
+	private Hashtable<Long, Integer> _xTable;
 
 	/**
-	  * Constructor.
-	  */
-	public XLut()
-	{
-		_xTable = new Hashtable(65536);
+	 * Constructor.
+	 */
+	public XLut() {
+		_xTable = new Hashtable<Long, Integer>(65536);
 	}
 
 	/**
-	  * Add a node pair and their distance to this table.
-	  * @param	eid1	element id #1
-	  * @param	eid2	element id #2
-	  * @param	dist	distance
-	  */
-	public void add(int eid1, int eid2, int dist)
-	{
-		long	key = eid1;
+	 * Add a node pair and their distance to this table.
+	 *
+	 * @param eid1
+	 *            element id #1
+	 * @param eid2
+	 *            element id #2
+	 * @param dist
+	 *            distance
+	 */
+	public void add(int eid1, int eid2, int dist) {
+		long key = eid1;
 		key = key << 32;
 		key += eid2;
 
@@ -70,21 +71,24 @@ class XLut
 	}
 
 	/**
-	  * Get the distance of a node pair.
-	  * @param	eid1	element id #1
-	  * @param	eid2	element id #2
-	  * @return	distance or -1 if not found
-	  */
-	public int get(int eid1, int eid2)
-	{
-		long	key = eid1;
+	 * Get the distance of a node pair.
+	 *
+	 * @param eid1
+	 *            element id #1
+	 * @param eid2
+	 *            element id #2
+	 * @return distance or -1 if not found
+	 */
+	public int get(int eid1, int eid2) {
+		long key = eid1;
 		key = key << 32;
 		key += eid2;
 
-		Integer	value = (Integer)_xTable.get(new Long(key));
-		if (value == null)
+		Integer value = _xTable.get(new Long(key));
+		if (value == null) {
 			return XTree.NO_CONNECTION;
-		else
+		} else {
 			return value.intValue();
+		}
 	}
 }
